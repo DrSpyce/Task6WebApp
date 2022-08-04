@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationInsightsResourceId>/subscriptions/a857c5e5-9749-4612-a679-b1a69dc7911a/resourceGroups/DefaultResourceGroup-DEWC/providers/microsoft.insights/components/Task6WebApp20220804215545</ApplicationInsightsResourceId>
+    <UserSecretsId>e13b3259-2259-4df8-9c5f-ca9639231e02</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\data\ManMiddlenames.txt" />
+    <None Include="wwwroot\data\WomanMiddlenames.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="34.0.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
+  </ItemGroup>
+
+</Project>

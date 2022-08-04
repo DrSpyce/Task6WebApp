@@ -1,0 +1,91 @@
+﻿@page
+@model IndexModel
+@{
+	ViewData["Title"] = "Home page";
+}
+
+@section scripts {
+	<script src="~/js/index.js"></script>
+	<script>
+		function sendAjax(numberOfPersons ,seed = document.getElementById("seed").value) {
+			var locale = document.getElementById("locale").value;
+            var errors = document.getElementById("errorsInput").value;
+			$.ajax({
+				type: "GET",
+				url: '@Url.Page("Index", "scroll")',
+				data: "seed=" + seed + "&locale=" + locale + "&numberOfPersons=" + numberOfPersons + "&errors=" + errors,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function(result) {
+					showItems(result);
+				}
+			});
+		}
+	</script>
+}
+
+
+
+<div class="row justify-content-center">
+	<div class="col-md-4">
+		<div class="form-group">
+			<label asp-for="Locale" class="control-label"></label>
+			<select asp-for="Locale" id="locale" class="form-select">
+				<option value="ru">Russian</option>
+				<option value="en_US">United States</option>
+				<option value="es">Spanish</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="errorsRange" class="control-label">Errors</label>
+			<input class="form-control" id="errorsInput" value="0" onchange="inputErrorChange()" min="0" max="1000" type="number"/>
+			<input type="range" class="form-range" min="0" max="10" step="0.5" id="errorsRange" oninput="changeInputValue()" value="0" onchange="changeData()"/>
+		</div>
+		<div class="form-group">
+			<label asp-for="Seed" class="control-label"></label>
+			<input asp-for="Seed" class="form-control" id="seed"/>
+		</div>
+		<div class="form-group text-center mt-2">
+			<button onclick="randomizeSeed()" class="btn btn-primary w-50">Generate</button>
+		</div>
+	</div>
+</div>
+
+@section Table{
+	<table class="table table-Light table-hover table-striped text-center caption-top mt-4 fs-5 w-100">
+	<caption class="ms-3"><button onclick="loadAllData()" class="btn btn-primary">Load all data to CSV</button></caption>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Guid</th>
+				<th>Full name</th>
+				<th>Adress</th>
+				<th>Phone</th>
+			</tr>
+		</thead>
+		<tbody id="tbody">
+			@{
+				int i = 0;
+				foreach (var item in Model.Persons)
+				{
+					i++;
+					string guid = "guid"+i;
+					string fullName = "fullName" + i;
+					string adress = "adress" + i;
+					string phone = "phone" + i;
+																			<tr>
+																				<td>@item.PersonId</td>
+																				<td id="@guid">@item.Guid</td>
+																				<td id="@fullName">@item.FullName</td>
+																				<td id="@adress">@item.Adress</td>
+																				<td id="@phone">@item.Phone</td>
+																			</tr>
+				}
+			}
+		</tbody>
+	</table>
+	<span class="visually-hidden" id="rowNumber">@i</span>
+}
+
+
+
